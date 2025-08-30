@@ -45,7 +45,7 @@ Ast *ast_id(char *s)
   return res;
 }
 
-EnumType stringType_toEnumType(char* t)
+EnumType stringType_toEnumType(char *t)
 {
   if (strcmp(t, "Int") == 0 || strcmp(t, "Integer") == 0 || strcmp(t, "Entero") == 0)
     return TypeINT;
@@ -57,7 +57,7 @@ EnumType stringType_toEnumType(char* t)
   return NullType;
 }
 
-Ast* ast_decl(char* t, Ast* a)
+Ast *ast_decl(char *t, Ast *a)
 {
   Ast *res = (Ast *)malloc(sizeof(Ast));
   res->kind = AST_DECL;
@@ -128,7 +128,7 @@ Ast *ast_seq(Ast *a, Ast *b)
   return a;
 }
 
-Ast* ast_ret(char* ret, Ast* a)
+Ast *ast_ret(char *ret, Ast *a)
 {
   Ast *res = (Ast *)malloc(sizeof(Ast));
   res->kind = AST_RET;
