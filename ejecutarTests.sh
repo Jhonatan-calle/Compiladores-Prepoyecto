@@ -14,8 +14,13 @@ echo "Caso 2: errorIdUnknown.txt"
 echo "#################################"
 
 echo "#################################"
-echo "Caso 1: errorRedeclarado.txt"
+echo "Caso 3: errorRedeclarado.txt"
 ./parser test/errorRedeclarado.txt
+echo "#################################"
+
+echo "#################################"
+echo "Caso 4: errorTipos.txt"
+./parser test/errorTipos.txt
 echo "#################################"
 
 echo "Fin ejecucion"
