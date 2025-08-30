@@ -1,0 +1,5 @@
+Entero main(){
+  Int bar = 2;
+  # Cadena tres = "2";
+  Int e;
+}
