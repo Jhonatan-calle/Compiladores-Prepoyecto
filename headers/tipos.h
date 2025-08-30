@@ -1,0 +1,28 @@
+#ifndef TIPOS_H
+#define TIPOS_H
+
+typedef enum
+{
+  TR_PROGRAMA,
+  TR_LISTA_SENTENCIAS,
+  TR_PERFIL,
+  TR_DECLARACION,
+  TR_ASIGNACION,
+  TR_RETURN,
+  TR_EXPRESION,
+  TR_VALOR,
+  TR_IDENTIFICADOR,
+  TR_SUMA,
+  TR_MULTIPLICACION,
+  TR_AND,
+  TR_OR
+} TipoNodo;
+
+typedef enum
+{
+  T_INT,
+  T_BOOL,
+  T_VOID
+} Tipos;
+
+#endif // TIPOS_H

@@ -1,28 +1,7 @@
 %code requires {
-    typedef enum {
-        TR_PROGRAMA = 0,
-        TR_LISTA_SENTENCIAS = 1,
-        TR_PERFIL = 2,
-        TR_DECLARACION = 3,
-        TR_ASIGNACION = 4,
-        TR_RETURN = 5,
-        TR_EXPRESION = 6,
-        TR_VALOR = 7,
-        TR_IDENTIFICADOR = 8,
-        TR_SUMA = 9,
-        TR_MULTIPLICACION = 10,
-        TR_AND = 11,
-        TR_OR = 12
+    #include "headers/tipos.h"
 
-    }TipoNodo;
-
-    typedef enum{
-        T_INT = 0, 
-        T_BOOL = 1,
-        T_VOID = 2,
-    } Tipos;
-
-    //estructuras para tabla de simbolos 
+    //estructuras para tabla de simbolos
 
     typedef struct {
         char *nombre;   // identificador
@@ -39,13 +18,13 @@
     //estructuras para nodos
 
     typedef struct AST{
-        TipoNodo type; 
-        Simbolo *info; 
+        TipoNodo type;
+        Simbolo *info;
         int child_count;
         struct AST **childs;
     } AST;
 
-    
+
     AST *append_child(AST *list, AST *child);
     void free_ast(AST *node);
     TablaSimbolos *crear_tabla(size_t capacidad_inicial);
@@ -68,7 +47,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-extern FILE *yyin; 
+extern FILE *yyin;
 
 int yylex(void);
 void yyerror(const char *s);
@@ -87,7 +66,7 @@ void yyerror(const char *s);
     TablaSimbolos *t;
     AST *root;
     int temp_counter = 0;
-    
+
 
 
     //rutinas para tabla de simbolos
@@ -136,7 +115,7 @@ void yyerror(const char *s);
     }
 
 
-        
+
 
     char *new_temp() {
         char buffer[16];
@@ -342,7 +321,7 @@ void yyerror(const char *s);
                     default: break;
 
                 }
-                
+
                 node->child_count = 2;
                 node->childs = malloc(sizeof(AST *) * 2);
 
@@ -373,7 +352,7 @@ void yyerror(const char *s);
                     default: break;
 
                 }
-                
+
                 node->child_count = 0;
             }
 
@@ -418,11 +397,11 @@ void yyerror(const char *s);
 }
 
 
- 
-%token <val> NUM 
+
+%token <val> NUM
 %token <id> ID
 %type <tipo> tipos tiposF
-%token <tipo> INT BOOL   
+%token <tipo> INT BOOL
 %token RETURN MAIN VOID AND OR TOKEN_TRUE TOKEN_FALSE
 %type <node> prog lista_sentencias sentencia expr valor
 
@@ -430,11 +409,11 @@ void yyerror(const char *s);
 %left AND
 %left '+'
 %left '*'
- 
+
 %%
-  
-prog: tiposF MAIN '(' ')' '{' lista_sentencias '}'  
-    {   
+
+prog: tiposF MAIN '(' ')' '{' lista_sentencias '}'
+    {
         $$ = new_node(TR_PROGRAMA,2,$1,$6);
         root = $$;
         // print_ast($$,0);
@@ -469,11 +448,11 @@ sentencia: tipos ID ';'
     ;
 
 
-expr: valor   
+expr: valor
     { $$ = $1 ;}
-    | ID   
+    | ID
     { $$ = new_node(TR_IDENTIFICADOR, 1, $1); }
-    | expr '+' expr    
+    | expr '+' expr
     { $$ = new_node(TR_SUMA, 2, $1, $3); }
     | expr '*' expr
     { $$ = new_node(TR_MULTIPLICACION, 2, $1, $3); }
@@ -482,14 +461,14 @@ expr: valor
     | expr OR expr
     { $$ = new_node(TR_OR, 2, $1, $3); }
     | '(' expr ')'
-    { $$ = $2; }      
+    { $$ = $2; }
     ;
 
-valor: NUM 
+valor: NUM
     {$$ = new_node(TR_VALOR,0,T_INT, $1);}
-    | TOKEN_FALSE 
+    | TOKEN_FALSE
     {$$ = new_node(TR_VALOR,0,T_BOOL, 0);}
-    | TOKEN_TRUE 
+    | TOKEN_TRUE
     {$$ = new_node(TR_VALOR,0,T_BOOL, 1);}
     ;
 %%
@@ -503,7 +482,7 @@ int main(int argc,char *argv[]){
 		yyin = stdin;
 
 	yyparse();
-}	
+}
 
 
 void print_ast(AST *node, int level) {
@@ -518,7 +497,7 @@ void print_ast(AST *node, int level) {
         } break;
 
         case TR_DECLARACION: {
-            printf(" [tipo: %s, id: %s]", 
+            printf(" [tipo: %s, id: %s]",
                    tipoDatoToStr(node->info->tVar),
                    node->info->nombre);
         } break;
@@ -530,14 +509,14 @@ void print_ast(AST *node, int level) {
         } break;
 
         case TR_VALOR: {
-            printf(" [valor: %d, tipo: %s]", 
+            printf(" [valor: %d, tipo: %s]",
                    node->info->valor,
                    tipoDatoToStr(node->info->tVar));
         } break;
 
         case TR_IDENTIFICADOR: {
             if (node->info) {
-                printf(" [id: %s, tipo: %s]", 
+                printf(" [id: %s, tipo: %s]",
                        node->info->nombre,
                        tipoDatoToStr(node->info->tVar));
             }
