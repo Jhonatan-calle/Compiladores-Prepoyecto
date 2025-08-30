@@ -4,6 +4,8 @@ ejemplo/
 *.yy.c
 *.pdf
 
+*.o
+
 #opcional
 *.tab.c
 *tab.h
