@@ -163,6 +163,8 @@ char *ast_kind_toString(AstKind ak)
     return "AST_SEQ";
   case AST_DECL:
     return "AST_DECL";
+  case AST_RET:
+    return "AST_RET";
   default:
     return "Invalid!!";
   }
