@@ -68,9 +68,9 @@ prog
   ;
 
 instrucciones
-  : declaraciones asignaciones R_RETURN expresion     { $$ = ast_seq($1, ast_seq($2, ast_ret($3, $4))); }
-  | declaraciones asignaciones                        { $$ = ast_seq($1, $2); }
-  | declaraciones                                     { $$ = $1; }
+  : declaraciones asignaciones R_RETURN expresion FinLinea      { $$ = ast_seq($1, ast_seq($2, ast_ret($3, $4))); }
+  | declaraciones asignaciones                                  { $$ = ast_seq($1, $2); }
+  | declaraciones                                               { $$ = $1; }
   ;
 
 asignaciones
