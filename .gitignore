@@ -4,6 +4,8 @@ ejemplo/
 *.yy.c
 *.pdf
 
+parser
+
 *.o
 
 #opcional
