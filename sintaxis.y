@@ -31,9 +31,10 @@
 
 %token <val> NUM
 %token <id> ID
-%type <tipo> tipos tiposF
 %token <tipo> INT BOOL
 %token RETURN MAIN VOID AND OR TOKEN_TRUE TOKEN_FALSE
+
+%type <tipo> tipos tiposF
 %type <node> prog lista_sentencias sentencia expr valor
 
 %left OR
@@ -43,65 +44,89 @@
 
 %%
 
-prog: tiposF MAIN '(' ')' '{' lista_sentencias '}'
+prog
+    : tiposF MAIN '(' ')' '{' lista_sentencias '}'
     {
         $$ = new_node(TR_PROGRAMA,2,$1,$6);
         root = $$;
-        // print_ast($$,0);
+        print_ast($$,0);
         gen_code(root);
         free_ast($$);
     }
     ;
 
-tiposF: INT   { $$ = T_INT;}
-       | VOID  { $$ = T_VOID;}
-       ;
 
-tipos: INT   { $$ = T_INT;}
-       | BOOL  { $$ = T_BOOL;}
-       ;
+tiposF
+    : INT   { $$ = T_INT;}
+    | VOID  { $$ = T_VOID;}
+    ;
 
 
-lista_sentencias: sentencia
+tipos
+    : INT   { $$ = T_INT;}
+    | BOOL  { $$ = T_BOOL;}
+    ;
+
+
+lista_sentencias
+    : sentencia
     {$$ = new_node(TR_LISTA_SENTENCIAS,1,$1);}
+
     | lista_sentencias sentencia
     {$$ = append_child($1,$2); }
     ;
 
-sentencia: tipos ID ';'
+
+sentencia
+    : tipos ID ';'
     {$$ = new_node(TR_DECLARACION,2,$1,$2); }
+
     |   ID '=' expr ';'
     {$$ = new_node(TR_ASIGNACION,2,$1,$3);}
+
     |   RETURN ';'
     {$$ = new_node(TR_RETURN,0); }
+
     |   RETURN expr ';'
     {$$ = new_node(TR_RETURN,1,$2); }
     ;
 
 
-expr: valor
+expr
+    : valor
     { $$ = $1 ;}
+
     | ID
     { $$ = new_node(TR_IDENTIFICADOR, 1, $1); }
+
     | expr '+' expr
     { $$ = new_node(TR_SUMA, 2, $1, $3); }
+
     | expr '*' expr
     { $$ = new_node(TR_MULTIPLICACION, 2, $1, $3); }
+
     | expr AND expr
     { $$ = new_node(TR_AND, 2, $1, $3); }
+
     | expr OR expr
     { $$ = new_node(TR_OR, 2, $1, $3); }
+
     | '(' expr ')'
     { $$ = $2; }
     ;
 
-valor: NUM
+
+valor
+    : NUM
     {$$ = new_node(TR_VALOR,0,T_INT, $1);}
+
     | TOKEN_FALSE
     {$$ = new_node(TR_VALOR,0,T_BOOL, 0);}
+
     | TOKEN_TRUE
     {$$ = new_node(TR_VALOR,0,T_BOOL, 1);}
     ;
+
 %%
 
 int main(int argc,char *argv[]){
