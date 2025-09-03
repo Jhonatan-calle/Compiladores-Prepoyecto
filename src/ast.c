@@ -50,6 +50,12 @@ void print_ast(AST *node, int level)
   case TR_RETURN:
     printf(" [return]");
     break;
+  case TR_AND:
+    printf(" [&&], valor: %d]", node->info->valor);
+    break;
+  case TR_OR:
+    printf(" [||], valor: %d]", node->info->valor);
+    break;
   default:
     printf(" [?]");
     break;
@@ -226,7 +232,11 @@ void module_switch_case_and(AST *node, va_list args)
   // operacion principal: AND
   node->info->valor = (op1->info->valor != 0) && (op2->info->valor != 0);
 
-  node->child_count = 0;
+  node->child_count = 2;
+  node->childs = malloc(sizeof(AST *) * 2);
+
+  node->childs[0] = op1;
+  node->childs[1] = op2;
 }
 
 void module_switch_case_or(AST *node, va_list args)
@@ -245,7 +255,11 @@ void module_switch_case_or(AST *node, va_list args)
   // operacion principal: OR
   node->info->valor = (op1->info->valor != 0) || (op2->info->valor != 0);
 
-  node->child_count = 0;
+  node->child_count = 2;
+  node->childs = malloc(sizeof(AST *) * 2);
+
+  node->childs[0] = op1;
+  node->childs[1] = op2;
 }
 
 void module_switch_case_return(AST *node, int child_count, va_list args)
