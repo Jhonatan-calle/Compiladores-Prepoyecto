@@ -1,4 +1,6 @@
-Para la materia Compiladores, del segundo cuatrimestre del 2025.
+Preproyecto para la materia Compiladores, del segundo cuatrimestre del 2025.
+
+Integrantes: **Jhonatan Calle Galeano** y **Joaquín Pablo Tissera**
 
 # Compilación
 Correr el script **./comp** ubicado en la raíz del repositorio.
