@@ -1,5 +1,18 @@
 Para la materia Compiladores, del segundo cuatrimestre del 2025.
 
+# Compilación
+Correr el script **./comp** ubicado en la raíz del repositorio.
+Si es necesario permisos de administrador, hacer **chmod +x comp.sh**
+
+# Ejecución de casos de prueba
+Correr el script **./ejecutarTests.sh** ubicado en la raíz del repositorio.
+Si es necesario permisos de administrador, hacer **chmod +x comp.sh**
+
+Si se quiere añadir más casos, se debe agregar el .txt de prueba correspondiente a la carpeta test/
+y luego añadir al script de ejecución de tests la ejecución del parser sobre el caso de prueba añadido.
+
+# Enunciado
+
 ### 1
 El Preproyecto consiste en extender una gramatica con expresion de declaracion de variables, asignaciones y uso de variables.
 Las variables pueden ser de tipo entero o logico.
