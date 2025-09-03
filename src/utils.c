@@ -80,9 +80,7 @@ char *gen_code(AST *node)
   case TR_LISTA_SENTENCIAS:
   {
     for (int i = 0; i < node->child_count; i++)
-    {
       gen_code(node->childs[i]);
-    }
     return NULL;
   }
 
